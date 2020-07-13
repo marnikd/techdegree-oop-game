@@ -18,4 +18,4 @@ for(let i = 0; i < 26; i++){
 }
 
 //adds behaviour to the real keyboard of the player
-document.addEventListener("keypress", (e) => game.handleInteraction(e.key));
+document.addEventListener("keyup", (e) => game.handleInteraction(e.key));
