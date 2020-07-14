@@ -19,8 +19,7 @@
     startGame(){
         document.getElementById('overlay').style.display = "none";
         this.activePhrase = this.getRandomPhrase();
-        const phrase = new Phrase(this.activePhrase);
-        phrase.addPhraseToDisplay();
+        this.activePhrase.addPhraseToDisplay();
     }
 
     //disables the key chosen and checks if it is in the phrase or not
@@ -29,20 +28,16 @@
     //if the letter is in the phrase the places were the letter is are shown
     //and the game checks if the player won the game
     handleInteraction(letter){
-        const phrase = new Phrase(this.activePhrase);
         const keyboard = document.getElementsByClassName("key");
           for(let i = 0; i<keyboard.length; i++){ 
-            if(keyboard[i].textContent === letter){
+            if(keyboard[i].textContent === letter && !keyboard[i].disabled){
                 keyboard[i].disabled = true;
-                if(!phrase.checkLetter(letter)){
+                if(!this.activePhrase.checkLetter(letter)){
                     keyboard[i].className = "key wrong"; 
                     this.removeLife();
-                    if(this.missed === 5){
-                        this.gameOver();
-                    }
                 } else{
                     keyboard[i].className = "key chosen";
-                    phrase.showMatchedLetter(letter);
+                    this.activePhrase.showMatchedLetter(letter);
                     if(this.checkForWin()){
                         this.gameOver();
                     }
@@ -57,6 +52,9 @@
         const lives = document.getElementsByClassName("tries");
         lives[4 - this.missed].firstChild.src = "images/lostHeart.png";
         this.missed += 1;
+        if(this.missed === 5){
+            this.gameOver();
+        }
     }
 
     //checks if the player won by looking at the class name of the boxes
@@ -82,7 +80,7 @@
             document.getElementById('game-over-message').innerHTML = "Congratulations! You guessed the word!";
         } else{
             overlay.className = "lose"
-            document.getElementById('game-over-message').innerHTML = `You failed to guess the word <strong>"${this.activePhrase}"</strong>, better luck next time. Try again!`
+            document.getElementById('game-over-message').innerHTML = `You failed to guess the word <strong>"${this.activePhrase.phrase}"</strong>, better luck next time. Try again!`
         }
     }
 

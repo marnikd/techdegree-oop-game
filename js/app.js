@@ -1,13 +1,12 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * app.js */
-
-const game = new Game(["monday","holland", "good morning", "strong", "javascript", "amsterdam"]);
 const startButton = document.getElementById("btn__reset");
 const keyboard = document.getElementsByClassName("key");
 
 //add behaviour to the start button
 startButton.addEventListener("click", (e) => {
+    const game = new Game([new Phrase("monday"),new Phrase("holland"), new Phrase("good morning"), new Phrase("strong"), new Phrase("javascript"), new Phrase("amsterdam")]);
     game.newGame();
     game.startGame();
 });
